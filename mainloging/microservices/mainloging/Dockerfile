@@ -2,10 +2,20 @@ FROM python:3.12
 
 WORKDIR /app
 
-COPY ./app /app/app
-COPY ./requirements.txt /app/requirements.txt
+
+COPY  . /app 
+COPY ./requirements.txt /app
+COPY ./app/db db
+COPY ./app/models models
+COPY ./app/schemas schemas
+COPY ./app/security security
+COPY ./app/auth auth
+COPY ./app/routers routers
+COPY . .
 
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+
+RUN pip install --no-cache-dir fastapi uvicorn sqlalchemy python-jose[cryptography] python-multipart
 
 # Expose port
 EXPOSE 8000
