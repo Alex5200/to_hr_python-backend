@@ -2,9 +2,9 @@ from typing import Optional
 from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from database import SessionLocal
-from models import User, Role
-from security import get_current_user_from_jwt, hash_password
+from db.database import SessionLocal
+from models.models import User, Role
+from security.security import get_current_user_from_jwt, hash_password
 
 
 def get_db():

@@ -1,0 +1,10 @@
+services:
+
+  microservice-mainloging:
+    build:
+      context: ../microservices/mainloging
+    container_name: mainloging-microservice-mainloging
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./test.db

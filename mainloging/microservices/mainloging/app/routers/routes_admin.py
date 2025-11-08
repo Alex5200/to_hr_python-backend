@@ -3,9 +3,9 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
-from database import SessionLocal
-from models import Role, User
-from rbac import is_admin
+from db.database import SessionLocal
+from models.models import Role, User
+from models.rbac import is_admin
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 

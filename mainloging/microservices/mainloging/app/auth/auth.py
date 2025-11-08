@@ -1,10 +1,10 @@
 from sqlalchemy.orm import Session
-from schemas import UserCreate
-from models import User, UserSession, Role
+from schemas.schemas import UserCreate
+from models.models import User, UserSession, Role
 from datetime import datetime, timedelta, timezone
-from security import hash_password
+from security.security import hash_password
 import uuid
-from security import verify_password
+from security.security import verify_password
 
 def create_user(db: Session, user: UserCreate) -> User:
 
@@ -36,7 +36,7 @@ def create_user(db: Session, user: UserCreate) -> User:
         is_active=True,
         role_id=(default_role.id if default_role else None)
     )
-    
+
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

@@ -2,6 +2,11 @@ from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator
 from typing import Optional
 from uuid import UUID
 
+
+class UserUpdate(BaseModel):
+    first_name: Optional[str] = Field(None, min_length=2, max_length=50)
+    last_name: Optional[str] = Field(None, min_length=2, max_length=50)
+    patronymic: Optional[str] = None
 class UserCreate(BaseModel):
     email: EmailStr
     password: str = Field(..., min_length=8, max_length=72)

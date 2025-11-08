@@ -4,25 +4,26 @@ from sqlalchemy.orm import Session
 from typing import Optional
 from uuid import UUID
 import logging
-from database import SessionLocal, engine
-from models import User, UserSession
+from db.database import SessionLocal, engine
+from models.models import User, UserSession
 from pydantic import EmailStr, BaseModel, Field
-from schemas import UserCreate, UserPublic, Token, UserLogin
-from security import (
+from schemas.schemas import UserCreate, UserPublic, Token, UserLogin, UserUpdate
+from security.security import (
     hash_password,
     verify_password,
     create_access_token,
     get_current_user_from_jwt,
     ALGORITHM, SECRET_KEY
 )
-from auth import create_user, create_db_session, delete_session, get_active_session, soft_delete_user, delete_all_sessions_for_user
+from auth.auth import create_user, create_db_session, delete_session, get_active_session, soft_delete_user, delete_all_sessions_for_user
 from jose import JWTError, jwt
 
-from models import Base
-from rbac import seed_rbac_minimal, seed_users_minimal
-from routes_admin import router as admin_router
-from routes_resources import router as resources_router
-from db_compat import ensure_user_role_column
+from models.models import Base
+from models.rbac import seed_rbac_minimal, seed_users_minimal
+from routers.routes_admin import router as admin_router
+from routers.routes_resources import router as resources_router
+from db.db_compat import ensure_user_role_column
+
 Base.metadata.create_all(bind=engine)
 
 from contextlib import asynccontextmanager
@@ -144,10 +145,7 @@ def profile(
 
     return user
 
-class UserUpdate(BaseModel):
-    first_name: Optional[str] = Field(None, min_length=2, max_length=50)
-    last_name: Optional[str] = Field(None, min_length=2, max_length=50)
-    patronymic: Optional[str] = None
+
 
 @app.patch("/profile", response_model=UserPublic, tags=["пользователь"])
 def update_profile(

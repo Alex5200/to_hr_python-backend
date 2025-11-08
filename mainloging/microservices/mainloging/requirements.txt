@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+sqlalchemy
+python-jose[cryptography]
+pwdlib[argon2,bcrypt]
+pydantic
+python-dotenv
+psycopg2-binary
+email-validator
+anyio
+starlette
+watchfiles

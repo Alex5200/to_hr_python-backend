@@ -1,6 +1,8 @@
 from sqlalchemy import inspect, text
 from sqlalchemy.engine import Engine
-
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def ensure_user_role_column(engine: Engine) -> None:
     inspector = inspect(engine)
@@ -8,7 +10,7 @@ def ensure_user_role_column(engine: Engine) -> None:
         columns = inspector.get_columns('users')
         names = {c['name'] for c in columns}
     except Exception:
-        # Если таблицы users нет, create_all создаст её — тут делать нечего
+        logger.error('Failed to get columns from users table')
         return
 
     if 'role_id' not in names:

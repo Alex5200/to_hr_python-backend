@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from rbac import require_role
+from models.rbac import require_role
 
 router = APIRouter(prefix="/resources", tags=["resources"])
 

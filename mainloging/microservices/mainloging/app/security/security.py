@@ -8,27 +8,24 @@ from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 from pwdlib import PasswordHash
 
-from models import User
-from database import SessionLocal
+from models.models import User
+from db.database import SessionLocal
 
-load_dotenv(".env")
+load_dotenv(".env.dev")
 
 SECRET_KEY =os.getenv("SECRET_KEY")
 if not SECRET_KEY:
-    raise RuntimeError("SECRET_KEY не задан в .env.dev")
+    SECRET_KEY = "63f4945d921d599f27ae4fdf5bada3f1"
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 password_hash = PasswordHash.recommended()
-
 
 def hash_password(password: str) -> str:
     return password_hash.hash(password)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return password_hash.verify(plain_password, hashed_password)
-
-
 
 def create_access_token( data, expires_delta: Optional[timedelta] = None) -> str:
     to_encode = data.copy()
@@ -37,7 +34,6 @@ def create_access_token( data, expires_delta: Optional[timedelta] = None) -> str
     )
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
-
 
 def get_db():
     db = SessionLocal()
