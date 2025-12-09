@@ -16,7 +16,6 @@ from security import (
     ALGORITHM, SECRET_KEY
 )
 from auth import create_user, create_db_session, delete_session, get_active_session, soft_delete_user, delete_all_sessions_for_user
-from jose import JWTError, jwt
 
 from models import Base
 from rbac import seed_rbac_minimal, seed_users_minimal
