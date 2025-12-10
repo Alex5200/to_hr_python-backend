@@ -1,0 +1,10 @@
+services:
+
+  microservice-admindata:
+    build:
+      context: ../microservices/admindata
+    container_name: outadmindata-microservice-admindata
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=sqlite:///./test.db
